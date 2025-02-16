@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Grid</title>
+    <style>
+        body {
+    background-color: #111;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    
+        }
+
+        .main {
+            /* background-color: rgb(31, 34, 34); */
+            background-color: #111;
+            width: calc(100% - 10px); /* Adjust width to account for sidebar */
+            max-width: 2200px;
+            height: 100%;
+            text-align: center;
+            /* margin-left: 90px; Push main content to the right of the sidebar */
+            /* transition: margin-left 0.3s ease; Smooth transition for sidebar toggle */
+            /* padding: 0px; Add some padding inside the main container */
+        }
+        .carousel-container {
+            width: 100%;
+            height: auto;
+            background-color: NONE;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .movie {
+            min-width: 100%;
+            margin-top: 0px;
+            position: relative;
+            text-align: center;
+        }
+
+        .movie img {
+            width: 100%;
+            cursor:pointer;
+            height: 310px;
+            object-fit: cover;
+        }
+
+        .dots {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            background: gray;
+            border-radius: 50%;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            width: 33px;
+            border-radius: 28px;
+            background: white;
+        }
+
+        h2 {
+            color: rgb(255, 255, 255);
+            justify-self:center;
+            margin-top: 29px;
+            margin-block-end: 29px;
+            font-size: 29px;
+            margin-left: 10px;
+            border-left: 8px solid rgb(173, 138, 75);
+            padding-left:11px;
+            text-align: center;
+            }
+
+        .movie-card {
+            margin-top: 20px;
+            background-color: #2a1e1e;
+            border-radius: 10px;
+            min-width: 422px;
+            height: 291px !important;
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .movie2-image {
+            width: 100%;
+            height: 255px;
+            overflow: hidden; /* Ensure the image stays within the container */
+            border-radius: 10px 10px 0 0; /* Rounded corners only at the top */
+        }
+
+        /* Styling for the image itself */
+        .movie2-image img {
+            width: 100%; /* Make the image responsive */
+            height: auto; /* Maintain aspect ratio */
+            display: block; /* Remove extra space below the image */
+            transition: transform 0.3s ease; /* Smooth hover effect */
+        }
+        .movie-card:hover {
+            transform: scale(1.05);
+        }
+
+        .movie-info {
+            padding: 0px;
+            font-size: 20px;
+            margin-top: px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 1024px) {
+            .movie-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Flexible layout for tablets */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .movie-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Flexible layout for mobile */
+            }
+            .movie-image img {
+                height: 250px;
+            }
+            .movie-info {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+        }
+
+        .movie-title {
+            font-size: 22px; /* Adjust the font size */
+            color: #ffffff; /* White text color */
+            margin: 0; /* Remove default margin */
+            justify-content: center;
+            font-weight: bold; /* Make the title bold */
+        }
+
+            /* Styling for the movie image container */
+
+
+        /* Styling for the image itself */
+        .movie-image img {
+            width: 100%; /* Make the image responsive */
+            height: auto; /* Maintain aspect ratio */
+            display: block; /* Remove extra space below the image */
+            transition: transform 0.3s ease; /* Smooth hover effect */
+        }
+
+        .movie-image img:hover {
+            transform: scale(1.1); /* Slightly zoom in on hover */
+        }
+
+        .movie-date {
+            color: #aaa;
+            font-size: 14px;
+            text-align: center;
+        }
+
+
+
+        .carousel-container1 {
+                    position: relative;
+                    overflow: hidden;
+                    margin: 10px;
+                    margin-left: 11px;
+                    margin-right: 11px;
+                }
+
+                .movie-grid1 {
+                    display: flex;
+                    height: 330px;
+                    gap: 13px;
+                    overflow-x: auto;
+                    margin-left: 58px;
+                    margin-right: 58px;
+                    scroll-behavior: smooth;
+                }
+
+                
+                .movie-grid1::-webkit-scrollbar {
+            height: 11px; /* Slimmer for a modern look */
+        }
+
+        .movie-grid1::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Warmer and more vibrant gradient */
+            border-radius: 20px;
+            border: 0.1px solid #9e9191; /* Adds contrast and definition */
+        }
+
+        .movie-grid1::-webkit-scrollbar-track {
+            background: none;
+            border-radius: 15px;
+        }
+
+            .scroll-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none; /* Updated gradient for a modern look */
+            opacity: 10%;
+            color: white;
+            border: none;
+            padding: 18px; /* Slightly larger padding for better clickability */
+            width: 40px; /* Fixed size for consistency */
+            height: 130px;
+            cursor: pointer;
+            z-index: 1;
+            font-size: 100px;
+            border-radius: 10px;
+            border-color: #111;
+            box-shadow: black; /* Softer shadow */
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 11; /* Slightly transparent for a modern feel */
+        }
+
+        .scroll-button:hover {
+            background: none; /* Reverse gradient on hover */
+            box-shadow: wheat; /* Deeper shadow on hover */
+            transform: translateY(-60%) scale(1.1);
+            opacity: 11; /* Fully opaque on hover */
+        }
+
+        .scroll-button:active {
+            transform: translateY(-50%) scale(0.95); /* Slight shrink effect on click */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Reset shadow on click */
+        }
+
+        /* Optional: Add a smooth fade-in effect when the button appears */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-50%) scale(0.8); }
+            to { opacity: 0.9; transform: translateY(-50%) scale(1); }
+        }
+
+        .scroll-button {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .scroll-left {
+            left: 4px;
+        }
+
+        .scroll-right {
+            right: 4px;
+        }
+
+        .pagination button {
+            background-color: #000;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 33px;
+            border-radius: 4px;
+            margin-top: 221px;
+            margin-bottom: 28px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .pagination button.active {
+            background-color: #ff9800;
+            color: black;
+        }
+
+        .pagination button:hover:not(.active) {
+            background-color: #333;
+        }
+        .toggle {
+            margin-left: 0px;
+            position: relative;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition-duration: 0.3s;
+        }
+
+       
+        .navbar {
+            display: flex;
+            margin-top: 0px;
+            width: 96,5%;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #000000;
+            padding: 15px 20px;
+            margin-block-end: 0px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Dropdown Menus */
+        .dropdown {
+            position: relative;
+                border-radius: 101px;
+
+        }
+
+        .dropbtn {
+            background: none;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 18px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            border-radius: 8px;
+            font-size: 20px;
+            min-width: 145px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #181818;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+
+        /* User Profile */
+        .user-profile {
+            position: relative;
+        }
+
+        .user-btn {
+            background: #444;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .search-bar {
+            /* margin-left: -107px;
+            margin-right: -97px; */
+            display:flex;
+            margin-top: 13px;
+            flex-wrap: wrap;
+            height: 26px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            justify-content: space-between;
+            padding: 3px 11px;
+            border-radius: 30px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .search-bar:hover {
+            background: rgba(165, 0, 0, 0.15);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .search-bar input {
+            background: none;
+            border: none;
+            color: white;
+            padding: 10px;
+            width: 130px;
+            height: 2px;
+            font-size: 16px;
+            outline: none;
+            transition: width 0.4s ease;
+        }
+
+        .search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-bar input:focus {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 204px;
+        }
+
+        .search-bar button {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            background: rgb(38, 150, 13);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 5px 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 19px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1px;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-bar button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #333;
+            width: 160px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .user-dropdown p {
+            padding: 10px;
+            font-size: 14px;
+            border-bottom: 1px solid #555;
+        }
+
+        .user-dropdown a {
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .user-dropdown a:hover {
+            background-color: #444;
+        }
+
+        .user-profile:hover .user-dropdown {
+            display: block;
+        }
+
+        .movie-grid2 {
+            display: flex;
+            flex-wrap:wrap;
+            gap: 13px; /* Adjust the gap between movie cards */
+            justify-content:center; /* Center the movie cards */
+
+            margin-top: 20px; /* Add some space above the grid */
+        }
+
+        /* Styling for each movie card */
+        .movie-card2 {
+            width: 288px; /* Adjust the width of the movie card */
+            height: 446px;
+            margin-bottom: 6px; /* Add some space between the cards */
+            color: white; /* White text for the card */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Center the text vertically */
+            align-items: center; /* Center the text horizontally */
+            cursor: pointer; /* Change cursor to pointer on hover */
+            position: relative; /* Add a position relative to the card for tooltip */
+            box-sizing: border-box; /* Ensures the card's padding and border are included in its total width and height */
+            background-color: #333; /* Dark background for the card */
+            border-radius: 10px; /* Rounded corners */
+            overflow: hidden; /* Ensure content stays within the card */
+            background-color: #1a1a1a; /* Dark background for the card */
+            border-radius: 10px; /* Rounded corners */
+            overflow: hidden; /* Ensure content stays within the card */
+
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+            transition: transform 0.3s ease; /* Smooth hover effect */
+        }
+
+        .movie-card2:hover {
+            transform: scale(1.05); /* Slightly enlarge the card on hover */
+        }
+
+        .movie-image {
+            width: 100%;
+            height: 390px;
+            overflow: hidden; /* Ensure the image stays within the container */
+            border-radius: 10px 10px 0 0; /* Rounded corners only at the top */
+        }
+
+        /* Styling for the movie info section */
+        .movie-info2 {
+            padding: 1px; /* Add some padding inside the info section */
+            text-align: center; /* Center the text */
+        }
+        /* Styling for the movie title */
+        .movie-title2 {
+            font-size: 18px; /* Adjust the font size */
+            color: #ffffff; /* White text color */
+            margin: 10; /* Remove default margin */
+            font-weight: bold; /* Make the title bold */
+        }
+
+        .menu-title {
+            font-size: 14px;
+            color: #aaaaaa;
+            margin: 10px 15px;
+        }
+
+   
+
+        /* Style the text */
+        span {
+            font-size: 22px; /* Adjust text size */
+            font-weight: bold; /* Make text bold */
+            color: #ffffff; /* Change text color */
+        }
+
+    
+        .back-button {
+            background-color: #000000;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 50px;
+            margin-top: -11px;
+            margin-bottom: 0px;
+            cursor: pointer;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="main">
+        <header class="navbar">
+            <button class="back-button" onclick="history.back()">&#8249; </button>
+    
+            <!-- Logo -->
+            <div class="logo">
+                <img src="" alt="">  <!-- Replace with actual logo -->
+            </div>
+            <!-- Navigation Links -->
+            <nav class="nav-links">
+    
+    
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="location.href='index.html'">Home <i class="fas fa-caret-down"></i></button>
+                </div>
+                
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="location.href='topup.html'">Top-Up <i class="fas fa-caret-down"></i></button>
+                </div>
+    
+        
+                <!-- Dropdown 4: Genres -->
+                <div class="dropdown">
+                    <button class="dropbtn">Movies <i class="fas fa-caret-down"></i></button>
+                    <div class="dropdown-content">
+                        <a href="Action.html">Action</a>
+                        <a href="Animation.html">Animation</a>
+                        <a href="comedy.html">Comedy</a>
+                        <a href="drama.html">Drama</a>
+                        <a href="horror.html">Horror</a>
+                        <a href="sci-fi.html">Sci-Fi</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn">Country <i class="fas fa-caret-down"></i></button>
+                    <div class="dropdown-content">
+                        <a href="cambodia.html">Cambodia</a>
+                        <a href="korea.html">Korea</a>
+                        <a href="france.html">France</a>
+                        <a href="japan.html">Japan</a>
+                        <a href="United-States.html">United States</a>
+                        <a href="china.html">China</a>
+                    </div>
+                </div>
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+    
+            
+        </nav>
+            <!-- User Profile -->
+            <div class="user-profile">
+                <button class="user-btn">Dy <i class="fas fa-caret-down"></i></button>
+                <div class="user-dropdown">
+                    <p>Dy Kh (User ID: 176834)</p>
+                    <a href="#">Profile</a>
+                    <a href="#">Settings</a>
+                    <a href="#">Logout</a>
+                </div>
+            </div>
+        </header>
+
+                
+    <h2>ACTION</h2>
+    <div class="movie-grid2">
+    <div class="movie-card2">
+        <div class="movie-container2">
+            <!-- <span class="label">Recently Added</span> -->
+            <div class="movie-image">
+                <img onclick="location.href='សោកនា.html'" src="https://www.khdiamond.net/wp-content/uploads/2024/09/POSTER-WEB-1-1-scaled.jpg" alt="Movie 1">
+            </div>
+        </div>  
+        <div class="movie-info2">
+            <p class="movie-title2">សោកនាដកម្មលើយន្ត...</p>
+        </div>
+    </div>
+    <div class="movie-card2">
+        <div class="movie-container2">
+            <!-- <span class="label">Recently Added</span> -->
+            <div class="movie-image">
+                <img onclick="location.href='ប្រមាញ់ឃាតករលាក់មុខ.html'" src="https://www.khdiamond.net/wp-content/uploads/2024/12/Poster-3-scaled.jpg" alt="Movie 1">
+            </div>
+        </div>
+        <div class="movie-info2">
+            <p class="movie-title2">ប្រមាញ់ឃាតករលាក់មុខ </p>
+        </div>
+    </div>
+    <div class="movie-card2">
+        <div class="movie-container2">
+            <!-- <span class="label">Recently Added</span> -->
+            <div class="movie-image">
+                <img style="width: 288px;" onclick="location.href='Kahar.html'" src="https://m.media-amazon.com/images/M/MV5BZWE2ZmNiYzgtZGM3My00Y2JiLWIxNDItMzYwZDQ3ODg4OWVjXkEyXkFqcGc@._V1_QL75_UX184.5_.jpg" alt="Movie 1">
+            </div>
+        </div>
+        <div class="movie-info2">
+            <p class="movie-title2">Kahar: Kapla High Council</p>
+        </div>
+    </div>
+    <div class="movie-card2">
+        <div class="movie-container2">
+            <!-- <span class="label">Recently Added</span> -->
+            <div class="movie-image">
+                <img style="width: 283px;" onclick="location.href='មហន្តរាយធ្លាក់យន្តហោះ.html'" src="https://www.khdiamond.net/wp-content/uploads/2024/05/POSTER-MOVIE.jpg" alt="Movie 1">
+            </div>
+        </div>
+        <div class="movie-info2">
+            <p class="movie-title2">មហន្តរាយធ្លាក់យន្តហោះ</p>
+        </div>
+    </div>
+    <div class="movie-card2">
+        <div class="movie-container2">
+            <!-- <span class="label">Recently Added</span> -->
+            <div class="movie-image">
+                <img style="width: 313px;" onclick="location.href='DenofThieves.html'" src="https://media.themoviedb.org/t/p/w220_and_h330_face/zLHq7fQA3xpck5UIHcRYgip5pQD.jpg" alt="Movie 1">
+            </div>
+        </div>
+        <div class="movie-info2">
+            <p class="movie-title2">Den of Thieves 2: Pantera</p>
+        </div>
+    </div>
+    <div class="movie-card2">
+        <div class="movie-container2">
+            <!-- <span class="label">Recently Added</span> -->
+            <div class="movie-image">
+                <img onclick="location.href='TheWitch.html'" src="https://www.khdiamond.net/wp-content/uploads/2024/09/the-witch-part-2.jpg" alt="Movie 1">
+            </div>
+        </div>
+        <div class="movie-info2">
+            <p class="movie-title2">ធ្មប់ វគ្គ 2 – The Witch Part 2...</p>
+        </div>
+    </div>
+    <div class="movie-card2">
+        <div class="movie-container2">
+            <!-- <span class="label">Recently Added</span> -->
+            <div class="movie-image">
+                <img onclick="location.href='កោះទាហានខ្មោចឆៅ.html'" src="https://khdiamond.net/wp-content/uploads/2025/01/poster-1-3-scaled.jpg" alt="Movie 1">
+            </div>
+        </div>
+        <div class="movie-info2">
+            <p class="movie-title2">កោះទាហានខ្មោចឆៅ</p>
+        </div>
+    </div>
+    <div class="movie-card2">
+        <div class="movie-container2">
+            <!-- <span class="label">Recently Added</span> -->
+            <div class="movie-image">
+                <img onclick="location.href='បងប្អូនសង្ហាកំពូលស៊យ.html'" src="https://khdiamond.net/wp-content/uploads/2024/09/poster-web-2.jpg" alt="Movie 1">
+            </div>
+        </div>
+        <div class="movie-info2">
+            <p class="movie-title2">បងប្អូនសង្ហាកំពូលស៊យ</p>
+        </div>
+    </div>
+    <div class="movie-card2">
+        <div class="movie-container2">
+            <!-- <span class="label">Recently Added</span> -->
+            <div class="movie-image">
+                <img  onclick="location.href='សង្គ្រោះចំណាប់ខ្មាំងលើយន្តហោះ.html'" src="https://khdiamond.net/wp-content/uploads/2025/02/poster-2-2.jpg" alt="Movie 1">
+            </div>
+        </div>
+        <div class="movie-info2">
+            <p class="movie-title2">សង្គ្រោះចំណាប់ខ្មាំងលើយន្តហោះ</p>
+        </div>
+    </div>
+    <div class="movie-card2">
+        <div class="movie-container2">
+            <!-- <span class="label">Recently Added</span> -->
+            <div class="movie-image">
+                <img onclick="location.href='ចាប់ជំរិតតារាល្បី.html'" src="https://www.khdiamond.net/wp-content/uploads/2024/09/poster-web1.jpg" alt="Movie 1">
+            </div>
+        </div>
+        <div class="movie-info2">
+            <p class="movie-title2">ចាប់ជំរិតតារាល្បី...</p>
+        </div>
+    </div>
+    <div class="movie-card2">
+        <div class="movie-container2">
+            <!-- <span class="label">Recently Added</span> -->
+            <div class="movie-image">
+                <img  style="width: 300px;" onclick="location.href='MyNameIs.html'" src="data:image/jpeg;base64,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" alt="Movie 1">
+            </div>
+        </div>
+        <div class="movie-info2">
+            <p class="movie-title2">My Name Is Loh Kiwan ( 2024 )</p>
+        </div>
+    </div>
+    
+    
+        
+        
+
+
+
+
+       
+
+    </div>
+
+        <footer>
+            <div class="pagination">
+                <div class="pagination">
+    
+                <button id="page-2" onclick="changePage(2)">1</button>
+                <button >2</button>
+                <button >4</button>
+                <button >5</button>
+                <button >6</button>
+                <button >7</button>
+                  </div>
+         </footer>
+
+<!-- 
+         <div id="comingSoonModal" class="coming-soon-message" style="display: none;">
+            <p>Coming Soon</p>
+            <div id="countdown" class="countdown">Time Left: 00:00:00</div>
+            <button onclick="window.location.href='index.html'">GO HOME</button>
+        </div> -->
+        
+    </div>
+    <script>
+        let currentIndex = 0;
+        let slideInterval;
+        let countdownTime = 169 * 24 * 60 * 60; // Convert 169 days to seconds
+    let countdownInterval;
+
+    // Function to update the countdown
+    function updateCountdown() {
+    const days = Math.floor(countdownTime / (24 * 60 * 60));
+    const hours = Math.floor((countdownTime % (24 * 60 * 60)) / (60 * 60));
+    const minutes = Math.floor((countdownTime % (60 * 60)) / 60);
+    const seconds = countdownTime % 60;
+    
+    document.getElementById('countdown').textContent = `Time Left: ${days} Days, ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    
+    countdownTime--;
+
+    // When the countdown reaches 0, hide the message
+    if (countdownTime < 0) {
+        clearInterval(countdownInterval);
+        document.getElementById('comingSoonModal').style.display = 'none'; // Hide modal after countdown
+    }
+        }
+
+        // Function to show the modal
+        function showComingSoonMessage() {
+            document.getElementById('comingSoonModal').style.display = 'flex'; // Show modal when movie is clicked
+            countdownInterval = setInterval(updateCountdown, 1000); // Start the countdown when modal is shown
+        }
+
+        // Show the "Coming Soon" message automatically when the page loads
+        window.onload = function() {
+            showComingSoonMessage(); // Trigger the modal to show on page load
+        };
+
+    
+        function toggleMenu() {
+            let submenu = document.getElementById("submenu");
+            let arrow = document.getElementById("arrow");
+            submenu.style.display = submenu.style.display === "block" ? "none" : "block";
+            arrow.style.transform = submenu.style.display === "block" ? "rotate(180deg)" : "rotate(0deg)";
+        }
+    
+        function moveSlide(index) {
+            const carousel = document.querySelector('.carousel');
+            const dots = document.querySelectorAll('.dot');
+            currentIndex = index;
+            carousel.style.transform = `translateX(${-index * 100}%)`;
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+        }
+    
+        function autoScroll() {
+            slideInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % 4;
+                moveSlide(currentIndex);
+            }, 3300);
+        }
+    
+        function resetAutoScroll() {
+            clearInterval(slideInterval);
+            autoScroll();
+        }
+    
+        document.querySelectorAll('.dot').forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                moveSlide(index);
+                resetAutoScroll();
+            });
+        });
+    
+        autoScroll();
+    
+        function scrollLeft() {
+            document.querySelector('.movie-grid1')?.scrollBy({ left: -700, behavior: 'smooth' });
+        }
+    
+        function scrollRight() {
+            document.querySelector('.movie-grid1')?.scrollBy({ left: 700, behavior: 'smooth' });
+        }
+    
+        document.querySelector('.scroll-left')?.addEventListener('click', scrollLeft);
+        document.querySelector('.scroll-right')?.addEventListener('click', scrollRight);
+    
+        function toggleMore() {
+            const hiddenItems = document.querySelectorAll('.hidden');
+            const showMoreButton = document.querySelector('.show-more');
+            hiddenItems.forEach(item => item.classList.toggle('visible'));
+            showMoreButton.textContent = showMoreButton.textContent === 'Show more' ? 'Show less' : 'Show more';
+        }
+    
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const main = document.querySelector('.main');
+            sidebar.classList.toggle('hidden-sidebar');
+            main.style.marginLeft = sidebar.classList.contains('hidden-sidebar') ? '0' : '250px';
+            main.style.width = sidebar.classList.contains('hidden-sidebar') ? '100%' : 'calc(100% - 250px)';
+        }
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebar = document.getElementById('sidebar');
+            const main = document.querySelector('.main');
+            sidebar.classList.add('hidden-sidebar');
+            main.style.marginLeft = '0';
+            main.style.width = '100%';
+        });
+    
+        const searchInput = document.querySelector(".search-bar input");
+        if (searchInput) {
+            searchInput.addEventListener("focus", () => searchInput.style.backgroundColor = "#555");
+            searchInput.addEventListener("blur", () => searchInput.style.backgroundColor = "transparent");
+        }
+    
+        const userBtn = document.querySelector(".user-btn");
+        const userDropdown = document.querySelector(".user-dropdown");
+        if (userBtn && userDropdown) {
+            userBtn.addEventListener("click", (event) => {
+                event.stopPropagation();
+                userDropdown.style.display = userDropdown.style.display === "block" ? "none" : "block";
+            });
+            document.addEventListener("click", () => userDropdown.style.display = "none");
+        }
+    </script>
+</html>
+
+

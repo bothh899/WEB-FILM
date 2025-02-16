@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Grid</title>
+    <style>
+        body {
+    background-color: #111;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    
+        }
+
+        .main {
+            /* background-color: rgb(31, 34, 34); */
+            background-color: #111;
+            width: calc(100% - 10px); /* Adjust width to account for sidebar */
+            max-width: 2200px;
+            height: 100%;
+            text-align: center;
+            /* margin-left: 90px; Push main content to the right of the sidebar */
+            /* transition: margin-left 0.3s ease; Smooth transition for sidebar toggle */
+            /* padding: 0px; Add some padding inside the main container */
+        }
+        .carousel-container {
+            width: 100%;
+            height: auto;
+            background-color: NONE;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .movie {
+            min-width: 100%;
+            margin-top: 0px;
+            position: relative;
+            text-align: center;
+        }
+
+        .movie img {
+            width: 100%;
+            cursor:pointer;
+            height: 310px;
+            object-fit: cover;
+        }
+
+        .dots {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            background: gray;
+            border-radius: 50%;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            width: 33px;
+            border-radius: 28px;
+            background: white;
+        }
+
+        h2 {
+            color: rgb(255, 255, 255);
+            justify-self:center;
+            margin-top: 29px;
+            margin-block-end: 29px;
+            font-size: 29px;
+            margin-left: 10px;
+            border-left: 8px solid rgb(173, 138, 75);
+            padding-left:11px;
+            text-align: center;
+            }
+
+        .movie-card {
+            margin-top: 20px;
+            background-color: #2a1e1e;
+            border-radius: 10px;
+            min-width: 422px;
+            height: 291px !important;
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .movie2-image {
+            width: 100%;
+            height: 255px;
+            overflow: hidden; /* Ensure the image stays within the container */
+            border-radius: 10px 10px 0 0; /* Rounded corners only at the top */
+        }
+
+        /* Styling for the image itself */
+        .movie2-image img {
+            width: 100%; /* Make the image responsive */
+            height: auto; /* Maintain aspect ratio */
+            display: block; /* Remove extra space below the image */
+            transition: transform 0.3s ease; /* Smooth hover effect */
+        }
+        .movie-card:hover {
+            transform: scale(1.05);
+        }
+
+        .movie-info {
+            padding: 0px;
+            font-size: 20px;
+            margin-top: px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 1024px) {
+            .movie-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Flexible layout for tablets */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .movie-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Flexible layout for mobile */
+            }
+            .movie-image img {
+                height: 250px;
+            }
+            .movie-info {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+        }
+
+        .movie-title {
+            font-size: 22px; /* Adjust the font size */
+            color: #ffffff; /* White text color */
+            margin: 0; /* Remove default margin */
+            justify-content: center;
+            font-weight: bold; /* Make the title bold */
+        }
+
+            /* Styling for the movie image container */
+
+
+        /* Styling for the image itself */
+        .movie-image img {
+            width: 100%; /* Make the image responsive */
+            height: auto; /* Maintain aspect ratio */
+            display: block; /* Remove extra space below the image */
+            transition: transform 0.3s ease; /* Smooth hover effect */
+        }
+
+        .movie-image img:hover {
+            transform: scale(1.1); /* Slightly zoom in on hover */
+        }
+
+        .movie-date {
+            color: #aaa;
+            font-size: 14px;
+            text-align: center;
+        }
+
+
+
+        .carousel-container1 {
+                    position: relative;
+                    overflow: hidden;
+                    margin: 10px;
+                    margin-left: 11px;
+                    margin-right: 11px;
+                }
+
+                .movie-grid1 {
+                    display: flex;
+                    height: 330px;
+                    gap: 13px;
+                    overflow-x: auto;
+                    margin-left: 58px;
+                    margin-right: 58px;
+                    scroll-behavior: smooth;
+                }
+
+                
+                .movie-grid1::-webkit-scrollbar {
+            height: 11px; /* Slimmer for a modern look */
+        }
+
+        .movie-grid1::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Warmer and more vibrant gradient */
+            border-radius: 20px;
+            border: 0.1px solid #9e9191; /* Adds contrast and definition */
+        }
+
+        .movie-grid1::-webkit-scrollbar-track {
+            background: none;
+            border-radius: 15px;
+        }
+
+            .scroll-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none; /* Updated gradient for a modern look */
+            opacity: 10%;
+            color: white;
+            border: none;
+            padding: 18px; /* Slightly larger padding for better clickability */
+            width: 40px; /* Fixed size for consistency */
+            height: 130px;
+            cursor: pointer;
+            z-index: 1;
+            font-size: 100px;
+            border-radius: 10px;
+            border-color: #111;
+            box-shadow: black; /* Softer shadow */
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 11; /* Slightly transparent for a modern feel */
+        }
+
+        .scroll-button:hover {
+            background: none; /* Reverse gradient on hover */
+            box-shadow: wheat; /* Deeper shadow on hover */
+            transform: translateY(-60%) scale(1.1);
+            opacity: 11; /* Fully opaque on hover */
+        }
+
+        .scroll-button:active {
+            transform: translateY(-50%) scale(0.95); /* Slight shrink effect on click */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Reset shadow on click */
+        }
+
+        /* Optional: Add a smooth fade-in effect when the button appears */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-50%) scale(0.8); }
+            to { opacity: 0.9; transform: translateY(-50%) scale(1); }
+        }
+
+        .scroll-button {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .scroll-left {
+            left: 4px;
+        }
+
+        .scroll-right {
+            right: 4px;
+        }
+
+        .pagination button {
+            background-color: #000;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 33px;
+            border-radius: 4px;
+            margin-top: 221px;
+            margin-bottom: 28px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .pagination button.active {
+            background-color: #ff9800;
+            color: black;
+        }
+
+        .pagination button:hover:not(.active) {
+            background-color: #333;
+        }
+        .toggle {
+            margin-left: 0px;
+            position: relative;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition-duration: 0.3s;
+        }
+
+       
+        .navbar {
+            display: flex;
+            margin-top: 0px;
+            width: 96,5%;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #000000;
+            padding: 15px 20px;
+            margin-block-end: 0px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Dropdown Menus */
+        .dropdown {
+            position: relative;
+                border-radius: 101px;
+
+        }
+
+        .dropbtn {
+            background: none;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 18px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            border-radius: 8px;
+            font-size: 20px;
+            min-width: 145px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #181818;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+
+        /* User Profile */
+        .user-profile {
+            position: relative;
+        }
+
+        .user-btn {
+            background: #444;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .search-bar {
+            /* margin-left: -107px;
+            margin-right: -97px; */
+            display:flex;
+            margin-top: 13px;
+            flex-wrap: wrap;
+            height: 26px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            justify-content: space-between;
+            padding: 3px 11px;
+            border-radius: 30px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .search-bar:hover {
+            background: rgba(165, 0, 0, 0.15);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .search-bar input {
+            background: none;
+            border: none;
+            color: white;
+            padding: 10px;
+            width: 130px;
+            height: 2px;
+            font-size: 16px;
+            outline: none;
+            transition: width 0.4s ease;
+        }
+
+        .search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-bar input:focus {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 204px;
+        }
+
+        .search-bar button {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            background: rgb(38, 150, 13);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 5px 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 19px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1px;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-bar button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #333;
+            width: 160px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .user-dropdown p {
+            padding: 10px;
+            font-size: 14px;
+            border-bottom: 1px solid #555;
+        }
+
+        .user-dropdown a {
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .user-dropdown a:hover {
+            background-color: #444;
+        }
+
+        .user-profile:hover .user-dropdown {
+            display: block;
+        }
+
+        .movie-grid2 {
+            display: flex;
+            flex-wrap:wrap;
+            gap: 13px; /* Adjust the gap between movie cards */
+            justify-content:center; /* Center the movie cards */
+
+            margin-top: 20px; /* Add some space above the grid */
+        }
+
+        /* Styling for each movie card */
+        .movie-card2 {
+            width: 288px; /* Adjust the width of the movie card */
+            height: 446px;
+            margin-bottom: 6px; /* Add some space between the cards */
+            color: white; /* White text for the card */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Center the text vertically */
+            align-items: center; /* Center the text horizontally */
+            cursor: pointer; /* Change cursor to pointer on hover */
+            position: relative; /* Add a position relative to the card for tooltip */
+            box-sizing: border-box; /* Ensures the card's padding and border are included in its total width and height */
+            background-color: #333; /* Dark background for the card */
+            border-radius: 10px; /* Rounded corners */
+            overflow: hidden; /* Ensure content stays within the card */
+            background-color: #1a1a1a; /* Dark background for the card */
+            border-radius: 10px; /* Rounded corners */
+            overflow: hidden; /* Ensure content stays within the card */
+
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+            transition: transform 0.3s ease; /* Smooth hover effect */
+        }
+
+        .movie-card2:hover {
+            transform: scale(1.05); /* Slightly enlarge the card on hover */
+        }
+
+        .movie-image {
+            width: 100%;
+            height: 390px;
+            overflow: hidden; /* Ensure the image stays within the container */
+            border-radius: 10px 10px 0 0; /* Rounded corners only at the top */
+        }
+
+        /* Styling for the movie info section */
+        .movie-info2 {
+            padding: 1px; /* Add some padding inside the info section */
+            text-align: center; /* Center the text */
+        }
+        /* Styling for the movie title */
+        .movie-title2 {
+            font-size: 18px; /* Adjust the font size */
+            color: #ffffff; /* White text color */
+            margin: 10; /* Remove default margin */
+            font-weight: bold; /* Make the title bold */
+        }
+
+        .menu-title {
+            font-size: 14px;
+            color: #aaaaaa;
+            margin: 10px 15px;
+        }
+
+   
+
+        /* Style the text */
+        span {
+            font-size: 22px; /* Adjust text size */
+            font-weight: bold; /* Make text bold */
+            color: #ffffff; /* Change text color */
+        }
+
+    
+        .back-button {
+            background-color: #000000;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 50px;
+            margin-top: -11px;
+            margin-bottom: 0px;
+            cursor: pointer;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="main">
+        <header class="navbar">
+            <button class="back-button" onclick="history.back()">&#8249; </button>
+    
+            <!-- Logo -->
+            <div class="logo">
+                <img src="" alt="">  <!-- Replace with actual logo -->
+            </div>
+            <!-- Navigation Links -->
+            <nav class="nav-links">
+    
+    
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="location.href='index.html'">Home <i class="fas fa-caret-down"></i></button>
+                </div>
+                
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="location.href='topup.html'">Top-Up <i class="fas fa-caret-down"></i></button>
+                </div>
+    
+        
+                <!-- Dropdown 4: Genres -->
+                <div class="dropdown">
+                    <button class="dropbtn">Movies <i class="fas fa-caret-down"></i></button>
+                    <div class="dropdown-content">
+                        <a href="Action.html">Action</a>
+                        <a href="Animation.html">Animation</a>
+                        <a href="comedy.html">Comedy</a>
+                        <a href="drama.html">Drama</a>
+                        <a href="horror.html">Horror</a>
+                        <a href="sci-fi.html">Sci-Fi</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn">Country <i class="fas fa-caret-down"></i></button>
+                    <div class="dropdown-content">
+                        <a href="cambodia.html">Cambodia</a>
+                        <a href="korea.html">Korea</a>
+                        <a href="france.html">France</a>
+                        <a href="japan.html">Japan</a>
+                        <a href="United-States.html">United States</a>
+                        <a href="china.html">China</a>
+                    </div>
+                </div>
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+    
+            
+        </nav>
+            <!-- User Profile -->
+            <div class="user-profile">
+                <button class="user-btn">Dy <i class="fas fa-caret-down"></i></button>
+                <div class="user-dropdown">
+                    <p>Dy Kh (User ID: 176834)</p>
+                    <a href="#">Profile</a>
+                    <a href="#">Settings</a>
+                    <a href="#">Logout</a>
+                </div>
+            </div>
+        </header>
+
+                
+    <h2>AVENTURE</h2>
+    <div class="movie-grid2">
+        <div class="movie-card2">
+            <div class="movie-container2">
+                <!-- <span class="label">Recently Added</span> -->
+                <div class="movie-image">
+                    <img onclick="location.href='បងប្អូនសង្ហាកំពូលស៊យ.html'" src="https://khdiamond.net/wp-content/uploads/2024/09/poster-web-2.jpg" alt="Movie 1">
+                </div>
+            </div>
+            <div class="movie-info2">
+                <p class="movie-title2">បងប្អូនសង្ហាកំពូលស៊យ</p>
+            </div>
+        </div>
+        <div class="movie-card2">
+            <div class="movie-container2">
+                <!-- <span class="label">Recently Added</span> -->
+                <div class="movie-image">
+                    <img onclick="location.href='កោះទាហានខ្មោចឆៅ.html'" src="https://khdiamond.net/wp-content/uploads/2025/01/poster-1-3-scaled.jpg" alt="Movie 1">
+                </div>
+            </div>
+            <div class="movie-info2">
+                <p class="movie-title2">កោះទាហានខ្មោចឆៅ</p>
+            </div>
+        </div>
+        <div class="movie-card2">
+            <div class="movie-container2">
+                <!-- <span class="label">Recently Added</span> -->
+                <div class="movie-image" onclick="showComingSoonMessage()">
+                    <img onclick="location.href='ផែនការកម្ទេចសុខនខពិសោធន៍.html'" src="https://www.khdiamond.net/wp-content/uploads/2025/01/poster-1-7.jpg" alt="Movie 1">
+                </div>
+            </div>
+            <div class="movie-info2">
+                <p class="movie-title2">ផែនការកម្ទេចសុខនខ...</p>
+            </div>
+        </div>
+        <div class="movie-card2">
+            <div class="movie-container2">
+                <!-- <span class="label">Recently Added</span> -->
+                <div class="movie-image">
+                    <img onclick="location.href='សោកនា.html'" src="https://www.khdiamond.net/wp-content/uploads/2024/09/POSTER-WEB-1-1-scaled.jpg" alt="Movie 1">
+                </div>
+            </div>
+            <div class="movie-info2">
+                <p class="movie-title2">សោកនាដកម្មលើយន្ត...</p>
+            </div>
+        </div>
+        <div class="movie-card2">
+            <div class="movie-container2">
+                <!-- <span class="label">Recently Added</span> -->
+                <div class="movie-image">
+                    <img style="width: 313px;" onclick="location.href='Dominion.html'" src="https://media.themoviedb.org/t/p/w220_and_h330_face/xwM1MDzQn43jLJoUeY2YGBpUkuO.jpg" alt="Movie 1">
+                </div>
+            </div>
+            <div class="movie-info2">
+                <p class="movie-title2">Dominion of Darkness</p>
+            </div>
+        </div>
+
+
+
+       
+
+    </div>
+
+        <footer>
+            <div class="pagination">
+                <div class="pagination">
+    
+                <button id="page-2" onclick="changePage(2)">1</button>
+                <button >2</button>
+                <button >4</button>
+                <button >5</button>
+                <button >6</button>
+                <button >7</button>
+                  </div>
+         </footer>
+
+<!-- 
+         <div id="comingSoonModal" class="coming-soon-message" style="display: none;">
+            <p>Coming Soon</p>
+            <div id="countdown" class="countdown">Time Left: 00:00:00</div>
+            <button onclick="window.location.href='index.html'">GO HOME</button>
+        </div> -->
+        
+    </div>
+    <script>
+        let currentIndex = 0;
+        let slideInterval;
+        let countdownTime = 169 * 24 * 60 * 60; // Convert 169 days to seconds
+    let countdownInterval;
+
+    // Function to update the countdown
+    function updateCountdown() {
+    const days = Math.floor(countdownTime / (24 * 60 * 60));
+    const hours = Math.floor((countdownTime % (24 * 60 * 60)) / (60 * 60));
+    const minutes = Math.floor((countdownTime % (60 * 60)) / 60);
+    const seconds = countdownTime % 60;
+    
+    document.getElementById('countdown').textContent = `Time Left: ${days} Days, ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    
+    countdownTime--;
+
+    // When the countdown reaches 0, hide the message
+    if (countdownTime < 0) {
+        clearInterval(countdownInterval);
+        document.getElementById('comingSoonModal').style.display = 'none'; // Hide modal after countdown
+    }
+        }
+
+        // Function to show the modal
+        function showComingSoonMessage() {
+            document.getElementById('comingSoonModal').style.display = 'flex'; // Show modal when movie is clicked
+            countdownInterval = setInterval(updateCountdown, 1000); // Start the countdown when modal is shown
+        }
+
+        // Show the "Coming Soon" message automatically when the page loads
+        window.onload = function() {
+            showComingSoonMessage(); // Trigger the modal to show on page load
+        };
+
+    
+        function toggleMenu() {
+            let submenu = document.getElementById("submenu");
+            let arrow = document.getElementById("arrow");
+            submenu.style.display = submenu.style.display === "block" ? "none" : "block";
+            arrow.style.transform = submenu.style.display === "block" ? "rotate(180deg)" : "rotate(0deg)";
+        }
+    
+        function moveSlide(index) {
+            const carousel = document.querySelector('.carousel');
+            const dots = document.querySelectorAll('.dot');
+            currentIndex = index;
+            carousel.style.transform = `translateX(${-index * 100}%)`;
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+        }
+    
+        function autoScroll() {
+            slideInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % 4;
+                moveSlide(currentIndex);
+            }, 3300);
+        }
+    
+        function resetAutoScroll() {
+            clearInterval(slideInterval);
+            autoScroll();
+        }
+    
+        document.querySelectorAll('.dot').forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                moveSlide(index);
+                resetAutoScroll();
+            });
+        });
+    
+        autoScroll();
+    
+        function scrollLeft() {
+            document.querySelector('.movie-grid1')?.scrollBy({ left: -700, behavior: 'smooth' });
+        }
+    
+        function scrollRight() {
+            document.querySelector('.movie-grid1')?.scrollBy({ left: 700, behavior: 'smooth' });
+        }
+    
+        document.querySelector('.scroll-left')?.addEventListener('click', scrollLeft);
+        document.querySelector('.scroll-right')?.addEventListener('click', scrollRight);
+    
+        function toggleMore() {
+            const hiddenItems = document.querySelectorAll('.hidden');
+            const showMoreButton = document.querySelector('.show-more');
+            hiddenItems.forEach(item => item.classList.toggle('visible'));
+            showMoreButton.textContent = showMoreButton.textContent === 'Show more' ? 'Show less' : 'Show more';
+        }
+    
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const main = document.querySelector('.main');
+            sidebar.classList.toggle('hidden-sidebar');
+            main.style.marginLeft = sidebar.classList.contains('hidden-sidebar') ? '0' : '250px';
+            main.style.width = sidebar.classList.contains('hidden-sidebar') ? '100%' : 'calc(100% - 250px)';
+        }
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebar = document.getElementById('sidebar');
+            const main = document.querySelector('.main');
+            sidebar.classList.add('hidden-sidebar');
+            main.style.marginLeft = '0';
+            main.style.width = '100%';
+        });
+    
+        const searchInput = document.querySelector(".search-bar input");
+        if (searchInput) {
+            searchInput.addEventListener("focus", () => searchInput.style.backgroundColor = "#555");
+            searchInput.addEventListener("blur", () => searchInput.style.backgroundColor = "transparent");
+        }
+    
+        const userBtn = document.querySelector(".user-btn");
+        const userDropdown = document.querySelector(".user-dropdown");
+        if (userBtn && userDropdown) {
+            userBtn.addEventListener("click", (event) => {
+                event.stopPropagation();
+                userDropdown.style.display = userDropdown.style.display === "block" ? "none" : "block";
+            });
+            document.addEventListener("click", () => userDropdown.style.display = "none");
+        }
+    </script>
+</html>
+
+

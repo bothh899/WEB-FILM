@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Grid</title>
+    <link rel="stylesheet" href="qrcode.css"> <!-- Link to your CSS file -->
+    <style>
+        body {
+            background-color: #111;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: flex-start;
+            justify-content: center;
+
+    
+        }
+
+        .main {
+            /* background-color: rgb(31, 34, 34); */
+            flex-wrap: nowrap;
+            background-color: #111;
+            width: calc(100% - 10px); /* Adjust width to account for sidebar */
+            max-width: 1840px;
+            height: auto; /*
+            text-align: start; /*
+            /* margin-left: 90px; Push main content to the right of the sidebar */
+            /* transition: margin-left 0.3s ease; Smooth transition for sidebar toggle */
+            /* padding: 0px; Add some padding inside the main container */
+        }
+        .carousel-container {
+            width: 100%;
+            margin-top: 1px;
+            height: auto;
+            background-color: NONE;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .movie {
+            
+            min-width: 100%;
+            
+            margin-top: 0px;
+            position: relative;
+            text-align: center;
+        }
+
+        .movie img {
+            width: 100%;
+            cursor:pointer;
+            height: auto;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .dots {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            background: gray;
+            border-radius: 50%;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            width: 33px;
+            border-radius: 28px;
+            background: white;
+        }
+
+        .navbar {
+            display: flex;
+            margin-top: 0px;
+            width: 97.8%;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #000000;
+            padding: 15px 20px;
+            margin-block-end: 0px;
+   
+    
+        }
+
+        .logo img {
+            height: 20px;
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Dropdown Menus */
+        .dropdown {
+            position: relative;
+                border-radius: 101px;
+
+        }
+
+        .dropbtn {
+            background: none;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 18px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            border-radius: 8px;
+            font-size: 20px;
+            min-width: 145px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #181818;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+
+        /* User Profile */
+        .user-profile {
+            position: relative;
+        }
+
+        .user-btn {
+            background: #444;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .search-bar {
+            /* margin-left: -107px;
+            margin-right: -97px; */
+            display:flex;
+            margin-top: 13px;
+            flex-wrap: wrap;
+            height: 26px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            justify-content: space-between;
+            padding: 3px 11px;
+            border-radius: 30px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .search-bar:hover {
+            background: rgba(165, 0, 0, 0.15);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .search-bar input {
+            background: none;
+            border: none;
+            color: white;
+            padding: 10px;
+            width: 130px;
+            height: 2px;
+            font-size: 16px;
+            outline: none;
+            transition: width 0.4s ease;
+        }
+
+        .search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-bar input:focus {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 204px;
+        }
+
+        .search-bar button {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            background: rgb(38, 150, 13);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 5px 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 19px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1px;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-bar button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #333;
+            width: 160px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .user-dropdown p {
+            padding: 10px;
+            font-size: 14px;
+            border-bottom: 1px solid #555;
+        }
+
+        .user-dropdown a {
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .user-dropdown a:hover {
+            background-color: #444;
+        }
+
+        .user-profile:hover .user-dropdown {
+            display: block;
+        }
+
+        .back-button {
+            background-color: #000000;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            justify-content:space-between;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 50px;
+            margin-top: -11px;
+            margin-block-end: 0px;
+            cursor: pointer;
+        }
+
+    
+
+        .container {
+                width: 80%;
+                margin: auto;
+                display: flex;
+                flex-direction: column;
+            }
+
+            /* Main Section Layout */
+            .main-section {
+
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: flex-start;
+
+            }
+
+            /* Trailer Section */
+            .main-trailer {
+                position: relative;
+                border:1px solid none;
+                border-radius: 5px;
+                overflow: hidden;
+                flex: 2;
+            }
+
+            .trailer-container {
+                position: relative;
+                width: 100%;
+                padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            }
+
+            .trailer-frame {
+                display: flex;
+                margin-top: -1px;
+                flex-wrap:wrap-reverse;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+            }
+
+
+            /* Similar Movies Section */
+            .similar-movie {
+                flex: 1;
+                border: 0.1px solid none;
+                border-radius: 5px;
+                margin-left: 18px;
+                margin-right: 0px;
+                background-color: none;
+            }
+
+            .similar-movie h3 {
+                text-align: center;
+            }
+
+            .similar-list {
+                list-style: none;
+                padding: 0;
+            }
+
+            .similar-list {
+                flex-wrap:wrap-reverse;
+            }
+                .similar-list {
+            list-style: none;
+            padding: 0;
+            max-width: 100%;
+            display: block; /* Single column layout */
+            width: 100%; /* Ensure the list takes full available width */
+            }
+
+            
+            .details {
+            margin: 10px auto; /* Center the details */
+            max-width: auto; /* Set a maximum width */
+            padding: 0px;
+            margin-left: 11PX;
+            border: 0.1px solid NONE; /* Add a subtle border */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1); /* Subtle shadow */
+            background-color: #140f0f; /* Light background color */
+            }
+
+            .details h1 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: #ffffff; /* Dark gray title */
+            }
+
+            .details p {
+            font-size: 1.6em;
+            color: #c4b8b8; /* Gray subtitle */
+            margin-bottom: 10px;
+            }
+
+            .details .tags {
+            font-size: 0.9em;
+            color: #c4b8b8; /* Gray subtitle */
+            padding: 5px 10px;
+            border: 0px solid #c4b8b8;
+            margin-left: 61px;
+            border-radius: 5px;
+            display: inline-block; /* Make tags sit side-by-side */
+            margin-right: 5px; /* Space between tags */
+            background-color: none; /* Very light gray background for tags */
+            }
+
+            .carousel-container {
+            width: 100%;
+            height: 333px;
+            background-color: NONE;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .movie {
+            min-width: 100%;
+            margin-top: 0px;
+            position: relative;
+            text-align: center;
+        }
+
+        .movie img {
+            width: 100%;
+            cursor:pointer;
+            height: 290px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .dots {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            background: gray;
+            border-radius: 50%;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            width: 33px;
+            border-radius: 28px;
+            background: white;
+        }
+
+        .custom-paragraph {
+    font-family: Arial, sans-serif;
+    margin-left: 21px;
+    margin-right: 11px;
+    font-size: 22px;
+    line-height: 1.6;
+    text-align: center;
+    color: #ffffff; /* Change to a visible color based on your background */
+}
+
+        .custom-paragraph {
+    font-family: Arial, sans-serif;
+    margin-left: 21px;
+    margin-right: 11px;
+    font-size: 20px;
+    line-height: 1.6;
+    text-align: center;
+    color: #ffffff; /* Change to a visible color based on your background */
+}
+
+.more-text {
+            display: none;
+        }
+
+        .see-more {
+            display: block;
+            font-size: 18px;
+            margin-left: 4px;
+            margin-top: 1px;
+            font-family: Arial, sans-serif;
+            color: #ffffff; /* Adjust color as needed */
+            text-decoration: none;
+            cursor: pointer;
+        }
+footer {
+    background-color: #111;
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+footer h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.movie-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    width: 100%;
+}
+
+.movie-card {
+    min-width: 480px;
+    height: 311PX;
+    background-color: #222;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    margin-left: 22PX;
+    transition: transform 0.3s ease;
+}
+
+.movie-card:hover {
+    transform: scale(1.05);
+}
+
+.movie-image img {
+    width: 100%; /* Ensures the width is responsive */
+    height: 250px; /* Adjusted to make the image rectangular */
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.movie-title {
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+    background-color: #333;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.scroll-button {
+    position: absolute;
+    top: 50%;
+    background-color: rgba(155, 155, 155, 0.1);
+    border: none;
+    color: white;
+    font-size: 93px;
+    padding: 10px;
+    margin-top: -61px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 50%;
+
+    z-index: 2;
+    transition: background-color 0.3s ease;
+}
+
+.scroll-button:hover {
+    background-color: rgba(58, 52, 52, 0.5);
+}
+
+.scroll-left {
+    left: 10px;
+}
+
+.scroll-right {
+    right: 10px;   .scroll-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none; /* Updated gradient for a modern look */
+            opacity: 10%;
+            color: white;
+            border: none;
+            padding: 18px; /* Slightly larger padding for better clickability */
+            width: 1200px; /* Fixed size for consistency */
+            height: 120px;
+            cursor: pointer;
+            z-index: 1;
+            font-size: 100px;
+            border-radius: 10px;
+            border-color: #111;
+            box-shadow: black; /* Softer shadow */
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 11; /* Slightly transparent for a modern feel */
+        }
+
+        .scroll-button:hover {
+            background: none; /* Reverse gradient on hover */
+            box-shadow: wheat; /* Deeper shadow on hover */
+            transform: translateY(-60%) scale(1.1);
+            opacity: 11; /* Fully opaque on hover */
+        }
+
+        .scroll-button:active {
+            transform: translateY(-50%) scale(0.95); /* Slight shrink effect on click */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Reset shadow on click */
+        }
+}
+
+/* Hiding scrollbar on modern browsers */
+.movie-grid::-webkit-scrollbar {
+    display: none;
+}
+
+.button-container {
+    display: flex;
+    gap: 8px;
+    justify-content:space-between;
+    margin-bottom: 20px;
+}
+
+.button-container button {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    color: white;
+    font-size: 22px;
+    width: 1111px;
+    font-weight: bold;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.button-container button:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #ff4b2b, #ff416c);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.button-container button:active {
+    transform: scale(0.95);
+}
+
+    </style>
+</head>
+<body>
+        <div class="main">
+    <header class="navbar">
+        <button class="back-button" onclick="history.back()">&#8249; </button>
+
+        <!-- Logo -->
+        <div class="logo">
+            <img src="" alt="">  <!-- Replace with actual logo -->
+        </div>
+        <!-- Navigation Links -->
+        <nav class="nav-links">
+
+            <div class="dropdown">
+                <button class="dropbtn" onclick="location.href='index.html'">Home <i class="fas fa-caret-down"></i></button>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn" onclick="location.href='topup.html'">Top-Up <i class="fas fa-caret-down"></i></button>
+            </div>
+
+    
+            <!-- Dropdown 4: Genres -->
+            <div class="dropdown">
+                <button class="dropbtn">Movies <i class="fas fa-caret-down"></i></button>
+                <div class="dropdown-content">
+                    <a href="Action.html">Action</a>
+                    <a href="Animation.html">Animation</a>
+                    <a href="comedy.html">Comedy</a>
+                    <a href="drama.html">Drama</a>
+                    <a href="horror.html">Horror</a>
+                    <a href="sci-fi.html">Sci-Fi</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Country <i class="fas fa-caret-down"></i></button>
+                <div class="dropdown-content">
+                    <a href="cambodia.html">Cambodia</a>
+                    <a href="korea.html">Korea</a>
+                    <a href="france.html">France</a>
+                    <a href="japan.html">Japan</a>
+                    <a href="United-States.html">United States</a>
+                    <a href="china.html">China</a>
+                </div>
+            </div>
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" placeholder="Search...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+
+        
+    </nav>
+        <!-- User Profile -->
+        <div class="user-profile">
+            <button class="user-btn">Dy <i class="fas fa-caret-down"></i></button>
+            <div class="user-dropdown">
+                <p>Dy Kh (User ID: 176834)</p>
+                <a href="#">Profile</a>
+                <a href="#">Settings</a>
+                <a href="#">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-section">
+        <!-- Main Trailer -->
+        <div class="main-trailer">
+            <div class="trailer-container"> 
+            <!-- Button Options -->
+
+            
+            <iframe 
+                id="video-frame"
+                class="trailer-frame"
+                src="https://www.youtube.com/embed/IyaFEBI_L24?autoplay=1"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+                
+            </div>
+          <!-- Details Section -->
+          <div class="details">
+            <div class="button-container">
+                <button onclick="changeVideo('https://www.youtube.com/embed/IyaFEBI_L24')">TRAILER</button>
+                <!-- <button onclick="changeVideo('')">FULL MOVIE</button> -->
+
+                <button onclick="showModal('https://www.youtube.com/embed/IyaFEBI_L24')" style="cursor: pointer;">FULL MOVIE</button>
+
+                <!-- Overlay -->
+                <div id="overlay" class="overlay">
+                    <!-- Purchase Modal -->
+                    <div id="modal" class="modal">
+                        <h2>Purchase Required</h2>
+                        <p style="            font-size: 26px;
+                        color: #362e2e;
+                        line-height: 1.6;
+                        margin-bottom: 20px;">You need to pay access to watch the full movie.</p>
+                        <button1 class="buy-btn" onclick="showQR()">Pay Now</button1>
+                        <button1 class="close-btn" onclick="closeModal()">Close</button1>
+                    </div>
+                </div>
+                
+                <!-- QR Code Overlay -->
+                <div id="qrOverlay" class="qr-overlay"></div>
+                
+                <!-- QR Code Modal -->
+                <div id="qrModal" class="qr-modal">
+                    <h3>Scan to Pay</h3>
+                    <p style="color: #000000;">Use your phone to scan and complete the purchase.</p>
+                    <div class="qr-code">
+                        <img src="QRCODE.png" alt="QR Code" width="100%" height="auto" >
+                    </div>
+                    <button1 class="close-btn" onclick="closeQR()">Close</button1>
+                </div>
+            </div>
+            <h1>Men In Black III </h1>
+            <p> 25 May 2012 | 
+            <span class="tags"> ACTION | ADVENTURE | COMEDY |   </span> </p>
+        </div>
+    </div>
+       
+        <!-- Similar Movies -->
+        <div class="similar-movie">
+
+            <div class="carousel-container">
+                <div class="carousel">
+
+                    <div class="movie">
+                        <img src="https://reviewsfromthedisc.wordpress.com/wp-content/uploads/2013/07/men-in-black-3-poster.jpg" alt="Movie 2">
+                    </div>
+                    <div class="movie">
+                        <img src="data:image/jpeg;base64,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" alt="Movie 1">
+                    </div>
+                    <div class="movie">
+                        <img src="https://reviewsfromthedisc.wordpress.com/wp-content/uploads/2013/07/men-in-black-3-poster.jpg" alt="Movie 2">
+                    </div>
+                    <div class="movie">
+                        <img src="data:image/jpeg;base64,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" alt="Movie 1">
+                    </div>
+ 
+                </div>
+                <div class="dots">
+                    <span class="dot active" onclick="moveSlide(0)"></span>
+                    <span class="dot" onclick="moveSlide(1)"></span>
+                    <span class="dot" onclick="moveSlide(2)"></span>
+                    <span class="dot" onclick="moveSlide(3)"></span>
+                </div>
+            </div>
+          
+            <h2 style="text-align: center; font-weight: bold;">សង្ខេបសាច់រឿង [ Movie Summary ]</h2>
+            <p class="custom-paragraph">
+<!-- write -->  In Men in Black™ 3, Agents J (Will Smith) and K (Tommy Lee Jones) are back... in time. J has seen some inexplicable things in his 15 years with the Men in Black, but nothing, not even aliens, perplexes him as much as his wry, reticent partner. But when K’s life and the fate of the planet are put at stake,
+                <P class="custom-paragraph">
+            
+                <span class="more-text" style="display: none;">
+<!-- write --> Agent J will have to travel back in time to put things right. J discovers that there are secrets to the universe that K never told him -- secrets that will reveal themselves as he teams up with the young Agent K (Josh Brolin) to save his partner, the agency, and the future of humankind.
+                </span>
+                <a href="#" class="see-more">See More</a>
+            </P>
+            </p>
+    </div>
+  
+</div>
+    <footer>
+        <h2 style="text-align: start; margin-top: -11px;">Recently Video </h2>
+        <div class="carousel-container">
+            <button class="scroll-button scroll-left" aria-label="Scroll Left">&#8249;</button>
+            <div class="movie-grid" id="movieGrid">
+                <!-- Movie Cards will be injected here by JavaScript -->
+            </div>
+            <button class="scroll-button scroll-right" aria-label="Scroll Right">&#8250;</button>
+        </div>
+    </footer>
+    
+
+</div>
+<script src="script-movie.js"></script>
+<script src="qrcode.js"></script>
+<script>
+    let currentIndex = 0; // Define globally
+    function changeVideo(url) {
+        // Ensure autoplay is enabled and prevent duplicate `?`
+        url = url.includes("?") ? url + "&autoplay=1" : url + "?autoplay=1";
+        document.getElementById("video-frame").src = url;
+    }
+
+    function moveSlide(index) {
+        const carousel = document.querySelector('.carousel');
+        const dots = document.querySelectorAll('.dot');
+
+        if (!carousel) return; // Prevent errors if carousel is missing
+
+        currentIndex = index;
+        carousel.style.transform = `translateX(${-index * 100}%)`;
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+    }
+
+    function autoScroll() {
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % 4; // Adjust based on total slides
+            moveSlide(currentIndex);
+        }, 1800);
+    }
+
+    // Run autoScroll only when DOM is loaded
+    window.addEventListener("load", () => {
+        autoScroll();
+        updateScrollButtons(); // Ensure buttons are checked on load
+    });
+
+    const carousel = document.querySelector('.movie-grid');
+    const scrollLeftButton = document.querySelector('.scroll-left');
+    const scrollRightButton = document.querySelector('.scroll-right');
+    const scrollStep = 700;
+
+    function updateScrollButtons() {
+        if (!carousel) return; // Prevent errors if carousel is missing
+
+        // Hide left button if at the start
+        scrollLeftButton.style.display = carousel.scrollLeft === 0 ? 'none' : 'block';
+
+        // Hide right button if at the end
+        scrollRightButton.style.display = (carousel.scrollLeft + carousel.offsetWidth >= carousel.scrollWidth)
+            ? 'none'
+            : 'block';
+    }
+
+    
+    if (carousel) {
+        scrollLeftButton.addEventListener('click', () => {
+            carousel.scrollBy({ left: -scrollStep, behavior: 'smooth' });
+            setTimeout(updateScrollButtons, 400); // Delay to ensure proper check
+        });
+
+        scrollRightButton.addEventListener('click', () => {
+            carousel.scrollBy({ left: scrollStep, behavior: 'smooth' });
+            setTimeout(updateScrollButtons, 400);
+        });
+
+        // Update buttons on scroll
+        carousel.addEventListener('scroll', updateScrollButtons);
+    }
+ 
+
+    document.querySelector('.see-more')?.addEventListener('click', function (e) {
+        e.preventDefault();
+        const moreText = document.querySelector('.more-text');
+        if (!moreText) return;
+
+        moreText.style.display = moreText.style.display === 'none' ? 'inline' : 'none';
+        this.textContent = moreText.style.display === 'inline' ? 'See Less' : 'See More';
+    });
+</script>
+
+    
+</body>
+</html>
+
+

@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Grid</title>
+    <link rel="stylesheet" href="qrcode.css"> <!-- Link to your CSS file -->
+    <style>
+        body {
+            background-color: #111;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: flex-start;
+            justify-content: center;
+
+    
+        }
+
+        .main {
+            /* background-color: rgb(31, 34, 34); */
+            flex-wrap: nowrap;
+            background-color: #111;
+            width: calc(100% - 10px); /* Adjust width to account for sidebar */
+            max-width: 1840px;
+            height: auto; /*
+            text-align: start; /*
+            /* margin-left: 90px; Push main content to the right of the sidebar */
+            /* transition: margin-left 0.3s ease; Smooth transition for sidebar toggle */
+            /* padding: 0px; Add some padding inside the main container */
+        }
+        .carousel-container {
+            width: 100%;
+            margin-top: 1px;
+            height: auto;
+            background-color: NONE;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .movie {
+            
+            min-width: 100%;
+            
+            margin-top: 0px;
+            position: relative;
+            text-align: center;
+        }
+
+        .movie img {
+            width: 100%;
+            cursor:pointer;
+            height: auto;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .dots {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            background: gray;
+            border-radius: 50%;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            width: 33px;
+            border-radius: 28px;
+            background: white;
+        }
+
+        .navbar {
+            display: flex;
+            margin-top: 0px;
+            width: 97.8%;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #000000;
+            padding: 15px 20px;
+            margin-block-end: 0px;
+   
+    
+        }
+
+        .logo img {
+            height: 20px;
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Dropdown Menus */
+        .dropdown {
+            position: relative;
+                border-radius: 101px;
+
+        }
+
+        .dropbtn {
+            background: none;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 18px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            border-radius: 8px;
+            font-size: 20px;
+            min-width: 145px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #181818;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+
+        /* User Profile */
+        .user-profile {
+            position: relative;
+        }
+
+        .user-btn {
+            background: #444;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .search-bar {
+            /* margin-left: -107px;
+            margin-right: -97px; */
+            display:flex;
+            margin-top: 13px;
+            flex-wrap: wrap;
+            height: 26px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            justify-content: space-between;
+            padding: 3px 11px;
+            border-radius: 30px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .search-bar:hover {
+            background: rgba(165, 0, 0, 0.15);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .search-bar input {
+            background: none;
+            border: none;
+            color: white;
+            padding: 10px;
+            width: 130px;
+            height: 2px;
+            font-size: 16px;
+            outline: none;
+            transition: width 0.4s ease;
+        }
+
+        .search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-bar input:focus {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 204px;
+        }
+
+        .search-bar button {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            background: rgb(38, 150, 13);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 5px 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 19px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1px;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-bar button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #333;
+            width: 160px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .user-dropdown p {
+            padding: 10px;
+            font-size: 14px;
+            border-bottom: 1px solid #555;
+        }
+
+        .user-dropdown a {
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .user-dropdown a:hover {
+            background-color: #444;
+        }
+
+        .user-profile:hover .user-dropdown {
+            display: block;
+        }
+
+        .back-button {
+            background-color: #000000;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            justify-content:space-between;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 50px;
+            margin-top: -11px;
+            margin-block-end: 0px;
+            cursor: pointer;
+        }
+
+    
+
+        .container {
+                width: 80%;
+                margin: auto;
+                display: flex;
+                flex-direction: column;
+            }
+
+            /* Main Section Layout */
+            .main-section {
+
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: flex-start;
+
+            }
+
+            /* Trailer Section */
+            .main-trailer {
+                position: relative;
+                border:1px solid none;
+                border-radius: 5px;
+                overflow: hidden;
+                flex: 2;
+            }
+
+            .trailer-container {
+                position: relative;
+                width: 100%;
+                padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            }
+
+            .trailer-frame {
+                display: flex;
+                margin-top: -1px;
+                flex-wrap:wrap-reverse;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+            }
+
+
+            /* Similar Movies Section */
+            .similar-movie {
+                flex: 1;
+                border: 0.1px solid none;
+                border-radius: 5px;
+                margin-left: 18px;
+                margin-right: 0px;
+                background-color: none;
+            }
+
+            .similar-movie h3 {
+                text-align: center;
+            }
+
+            .similar-list {
+                list-style: none;
+                padding: 0;
+            }
+
+            .similar-list {
+                flex-wrap:wrap-reverse;
+            }
+                .similar-list {
+            list-style: none;
+            padding: 0;
+            max-width: 100%;
+            display: block; /* Single column layout */
+            width: 100%; /* Ensure the list takes full available width */
+            }
+
+            
+            .details {
+            margin: 10px auto; /* Center the details */
+            max-width: auto; /* Set a maximum width */
+            padding: 0px;
+            margin-left: 11PX;
+            border: 0.1px solid NONE; /* Add a subtle border */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1); /* Subtle shadow */
+            background-color: #140f0f; /* Light background color */
+            }
+
+            .details h1 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: #ffffff; /* Dark gray title */
+            }
+
+            .details p {
+            font-size: 1.6em;
+            color: #c4b8b8; /* Gray subtitle */
+            margin-bottom: 10px;
+            }
+
+            .details .tags {
+            font-size: 0.9em;
+            color: #c4b8b8; /* Gray subtitle */
+            padding: 5px 10px;
+            border: 0px solid #c4b8b8;
+            margin-left: 61px;
+            border-radius: 5px;
+            display: inline-block; /* Make tags sit side-by-side */
+            margin-right: 5px; /* Space between tags */
+            background-color: none; /* Very light gray background for tags */
+            }
+
+            .carousel-container {
+            width: 100%;
+            height: 333px;
+            background-color: NONE;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .movie {
+            min-width: 100%;
+            margin-top: 0px;
+            position: relative;
+            text-align: center;
+        }
+
+        .movie img {
+            width: 100%;
+            cursor:pointer;
+            height: 290px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .dots {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            background: gray;
+            border-radius: 50%;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            width: 33px;
+            border-radius: 28px;
+            background: white;
+        }
+
+        .custom-paragraph {
+    font-family: Arial, sans-serif;
+    margin-left: 21px;
+    margin-right: 11px;
+    font-size: 22px;
+    line-height: 1.6;
+    text-align: center;
+    color: #ffffff; /* Change to a visible color based on your background */
+}
+
+        .custom-paragraph {
+    font-family: Arial, sans-serif;
+    margin-left: 21px;
+    margin-right: 11px;
+    font-size: 20px;
+    line-height: 1.6;
+    text-align: center;
+    color: #ffffff; /* Change to a visible color based on your background */
+}
+
+.more-text {
+            display: none;
+        }
+
+        .see-more {
+            display: block;
+            font-size: 18px;
+            margin-left: 4px;
+            margin-top: 1px;
+            font-family: Arial, sans-serif;
+            color: #ffffff; /* Adjust color as needed */
+            text-decoration: none;
+            cursor: pointer;
+        }
+footer {
+    background-color: #111;
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+footer h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.movie-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    width: 100%;
+}
+
+.movie-card {
+    min-width: 480px;
+    height: 311PX;
+    background-color: #222;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    margin-left: 22PX;
+    transition: transform 0.3s ease;
+}
+
+.movie-card:hover {
+    transform: scale(1.05);
+}
+
+.movie-image img {
+    width: 100%; /* Ensures the width is responsive */
+    height: 250px; /* Adjusted to make the image rectangular */
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.movie-title {
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+    background-color: #333;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.scroll-button {
+    position: absolute;
+    top: 50%;
+    background-color: rgba(155, 155, 155, 0.1);
+    border: none;
+    color: white;
+    font-size: 93px;
+    padding: 10px;
+    margin-top: -61px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 50%;
+
+    z-index: 2;
+    transition: background-color 0.3s ease;
+}
+
+.scroll-button:hover {
+    background-color: rgba(58, 52, 52, 0.5);
+}
+
+.scroll-left {
+    left: 10px;
+}
+
+.scroll-right {
+    right: 10px;   .scroll-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none; /* Updated gradient for a modern look */
+            opacity: 10%;
+            color: white;
+            border: none;
+            padding: 18px; /* Slightly larger padding for better clickability */
+            width: 1200px; /* Fixed size for consistency */
+            height: 120px;
+            cursor: pointer;
+            z-index: 1;
+            font-size: 100px;
+            border-radius: 10px;
+            border-color: #111;
+            box-shadow: black; /* Softer shadow */
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 11; /* Slightly transparent for a modern feel */
+        }
+
+        .scroll-button:hover {
+            background: none; /* Reverse gradient on hover */
+            box-shadow: wheat; /* Deeper shadow on hover */
+            transform: translateY(-60%) scale(1.1);
+            opacity: 11; /* Fully opaque on hover */
+        }
+
+        .scroll-button:active {
+            transform: translateY(-50%) scale(0.95); /* Slight shrink effect on click */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Reset shadow on click */
+        }
+}
+
+/* Hiding scrollbar on modern browsers */
+.movie-grid::-webkit-scrollbar {
+    display: none;
+}
+
+.button-container {
+    display: flex;
+    gap: 8px;
+    justify-content:space-between;
+    margin-bottom: 20px;
+}
+
+.button-container button {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    color: white;
+    font-size: 22px;
+    width: 1111px;
+    font-weight: bold;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.button-container button:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #ff4b2b, #ff416c);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.button-container button:active {
+    transform: scale(0.95);
+}
+
+    </style>
+</head>
+<body>
+        <div class="main">
+    <header class="navbar">
+        <button class="back-button" onclick="history.back()">&#8249; </button>
+
+        <!-- Logo -->
+        <div class="logo">
+            <img src="" alt="">  <!-- Replace with actual logo -->
+        </div>
+        <!-- Navigation Links -->
+        <nav class="nav-links">
+
+            <div class="dropdown">
+                <button class="dropbtn" onclick="location.href='index.html'">Home <i class="fas fa-caret-down"></i></button>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn" onclick="location.href='topup.html'">Top-Up <i class="fas fa-caret-down"></i></button>
+            </div>
+
+    
+            <!-- Dropdown 4: Genres -->
+            <div class="dropdown">
+                <button class="dropbtn">Movies <i class="fas fa-caret-down"></i></button>
+                <div class="dropdown-content">
+                    <a href="Action.html">Action</a>
+                    <a href="Animation.html">Animation</a>
+                    <a href="comedy.html">Comedy</a>
+                    <a href="drama.html">Drama</a>
+                    <a href="horror.html">Horror</a>
+                    <a href="sci-fi.html">Sci-Fi</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Country <i class="fas fa-caret-down"></i></button>
+                <div class="dropdown-content">
+                    <a href="cambodia.html">Cambodia</a>
+                    <a href="korea.html">Korea</a>
+                    <a href="france.html">France</a>
+                    <a href="japan.html">Japan</a>
+                    <a href="United-States.html">United States</a>
+                    <a href="china.html">China</a>
+                </div>
+            </div>
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" placeholder="Search...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+
+        
+    </nav>
+        <!-- User Profile -->
+        <div class="user-profile">
+            <button class="user-btn">Dy <i class="fas fa-caret-down"></i></button>
+            <div class="user-dropdown">
+                <p>Dy Kh (User ID: 176834)</p>
+                <a href="#">Profile</a>
+                <a href="#">Settings</a>
+                <a href="#">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-section">
+        <!-- Main Trailer -->
+        <div class="main-trailer">
+            <div class="trailer-container"> 
+            <!-- Button Options -->
+
+            
+            <iframe 
+                id="video-frame"
+                class="trailer-frame"
+                src="https://www.youtube.com/embed/_plOESCpwe4?autoplay=1"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+                
+            </div>
+          <!-- Details Section -->
+          <div class="details">
+            <div class="button-container">
+                <button onclick="changeVideo('https://www.youtube.com/embed/_plOESCpwe4')">TRAILER</button>
+                <!-- <button onclick="changeVideo('')">FULL MOVIE</button> -->
+
+                <button onclick="showModal('https://www.youtube.com/embed/_plOESCpwe4')" style="cursor: pointer;">FULL MOVIE</button>
+
+                <!-- Overlay -->
+                <div id="overlay" class="overlay">
+                    <!-- Purchase Modal -->
+                    <div id="modal" class="modal">
+                        <h2>Purchase Required</h2>
+                        <p style="            font-size: 26px;
+                        color: #362e2e;
+                        line-height: 1.6;
+                        margin-bottom: 20px;">You need to pay access to watch the full movie.</p>
+                        <button1 class="buy-btn" onclick="showQR()">Pay Now</button1>
+                        <button1 class="close-btn" onclick="closeModal()">Close</button1>
+                    </div>
+                </div>
+                
+                <!-- QR Code Overlay -->
+                <div id="qrOverlay" class="qr-overlay"></div>
+                
+                <!-- QR Code Modal -->
+                <div id="qrModal" class="qr-modal">
+                    <h3>Scan to Pay</h3>
+                    <p style="color: #000000;">Use your phone to scan and complete the purchase.</p>
+                    <div class="qr-code">
+                        <img src="QRCODE.png" alt="QR Code" width="100%" height="auto" >
+                    </div>
+                    <button1 class="close-btn" onclick="closeQR()">Close</button1>
+                </div>
+            </div>
+            
+            <h1>ភ្លើងស្នេហ៍ខុសជំនាន់ – Ditto - [예고편]동감(Ditto, 2022)</h1>
+            <p>Nov. 16, 2022 | South Korea | 114 Min
+            <span class="tags">DRAMA | ROMANCE | KOREA </span> </p>
+        </div>
+    </div>
+       
+        <!-- Similar Movies -->
+        <div class="similar-movie">
+
+            <div class="carousel-container">
+                <div class="carousel">
+                    <div class="movie">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShcwIZmaWbYLZw6jH5GIdbYU45r1APdyb2lg&s" alt="Movie 1">
+                    </div>
+                    <div class="movie">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgBxpAz1UNP-VUnJZs6OZqvVJGajdnWrTSGA&s" alt="Movie 3">
+                    </div>
+                    <div class="movie">
+                        <img src="data:image/jpeg;base64,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" alt="Movie 4">
+                    </div>
+                    <div class="movie">
+                        <img src="https://image.tmdb.org/t/p/original/2ncgbqLTWxx4VEZmV1nCqYCAGSe.jpg" alt="Movie 2">
+                    </div>
+                </div>
+                <div class="dots">
+                    <span class="dot active" onclick="moveSlide(0)"></span>
+                    <span class="dot" onclick="moveSlide(1)"></span>
+                    <span class="dot" onclick="moveSlide(2)"></span>
+                    <span class="dot" onclick="moveSlide(3)"></span>
+                </div>
+            </div>
+          
+                    <h2 style="text-align: center; font-weight: bold;">សង្ខេបសាច់រឿង [ Movie Summary ]</h2>
+                    <p class="custom-paragraph">
+                        A story about the love and friendship that takes place in an era where a man and a woman communicate through radio by chance.
+                        <P class="custom-paragraph">
+
+                    </P>
+                    </p>
+    </div>
+  
+</div>
+    <footer>
+        <h2 style="text-align: start; margin-top: -11px;">Recently Video </h2>
+        <div class="carousel-container">
+            <button class="scroll-button scroll-left" aria-label="Scroll Left">&#8249;</button>
+            <div class="movie-grid" id="movieGrid">
+                <!-- Movie Cards will be injected here by JavaScript -->
+            </div>
+            <button class="scroll-button scroll-right" aria-label="Scroll Right">&#8250;</button>
+        </div>
+    </footer>
+    
+
+</div>
+<script src="script-movie.js"></script>
+<script src="qrcode.js"></script>
+<script>
+    let currentIndex = 0; // Define globally
+    function changeVideo(url) {
+        // Ensure autoplay is enabled and prevent duplicate `?`
+        url = url.includes("?") ? url + "&autoplay=1" : url + "?autoplay=1";
+        document.getElementById("video-frame").src = url;
+    }
+
+    function moveSlide(index) {
+        const carousel = document.querySelector('.carousel');
+        const dots = document.querySelectorAll('.dot');
+
+        if (!carousel) return; // Prevent errors if carousel is missing
+
+        currentIndex = index;
+        carousel.style.transform = `translateX(${-index * 100}%)`;
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+    }
+
+    function autoScroll() {
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % 4; // Adjust based on total slides
+            moveSlide(currentIndex);
+        }, 1800);
+    }
+
+    // Run autoScroll only when DOM is loaded
+    window.addEventListener("load", () => {
+        autoScroll();
+        updateScrollButtons(); // Ensure buttons are checked on load
+    });
+
+    const carousel = document.querySelector('.movie-grid');
+    const scrollLeftButton = document.querySelector('.scroll-left');
+    const scrollRightButton = document.querySelector('.scroll-right');
+    const scrollStep = 700;
+
+    function updateScrollButtons() {
+        if (!carousel) return; // Prevent errors if carousel is missing
+
+        // Hide left button if at the start
+        scrollLeftButton.style.display = carousel.scrollLeft === 0 ? 'none' : 'block';
+
+        // Hide right button if at the end
+        scrollRightButton.style.display = (carousel.scrollLeft + carousel.offsetWidth >= carousel.scrollWidth)
+            ? 'none'
+            : 'block';
+    }
+
+    
+    if (carousel) {
+        scrollLeftButton.addEventListener('click', () => {
+            carousel.scrollBy({ left: -scrollStep, behavior: 'smooth' });
+            setTimeout(updateScrollButtons, 400); // Delay to ensure proper check
+        });
+
+        scrollRightButton.addEventListener('click', () => {
+            carousel.scrollBy({ left: scrollStep, behavior: 'smooth' });
+            setTimeout(updateScrollButtons, 400);
+        });
+
+        // Update buttons on scroll
+        carousel.addEventListener('scroll', updateScrollButtons);
+    }
+ 
+
+    document.querySelector('.see-more')?.addEventListener('click', function (e) {
+        e.preventDefault();
+        const moreText = document.querySelector('.more-text');
+        if (!moreText) return;
+
+        moreText.style.display = moreText.style.display === 'none' ? 'inline' : 'none';
+        this.textContent = moreText.style.display === 'inline' ? 'See Less' : 'See More';
+    });
+</script>
+
+    
+</body>
+</html>
+
+
