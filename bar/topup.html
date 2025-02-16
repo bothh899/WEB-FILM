@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Message</title>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --hover-color: #005bb5;
+            --background-color: #111; /* Dark background */
+            --text-color: #f4f4f4; /* Light text for contrast */
+            --card-bg-color: rgba(30, 30, 30, 0.8); /* Semi-transparent dark card background */
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); /* Stronger shadow for depth */
+            --border-radius: 20px; /* Rounded corners */
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1); /* Glassmorphism border */
+            --backdrop-filter: blur(10px); /* Blur effect for glassmorphism */
+            --ripple-color: rgba(255, 255, 255, 0.7); /* Ripple effect color */
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: var(--background-color);
+            font-family: var(--font-family);
+            color: var(--text-color);
+        }
+
+        .message-container {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            border-left: 5px solid var(--primary-color);
+            border: var(--glass-border);
+            backdrop-filter: var(--backdrop-filter);
+            max-width: 800px;
+            width: 100%;
+            height: 600px;
+            margin: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .message-container:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+            background: rgba(30, 30, 30, 0.9); /* Slightly darker on hover */
+        }
+
+        .message-container img {
+            width: 480px;
+            height: 100%;
+            border-radius: 15px;
+            margin-right: 30px;
+            object-fit: cover;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .message-container:hover img {
+            transform: scale(1.05);
+            filter: brightness(1.1); /* Slightly brighten the image on hover */
+        }
+
+        .message-text {
+            font-size: 28px;
+            line-height: 1.6;
+            text-align: center;
+            color: var(--text-color);
+            font-weight: 500;
+            max-width: 300px; /* Limit text width for better readability */
+        }
+
+        .message-text strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .message-container {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+                height: auto;
+            }
+
+            .message-container img {
+                width: 100%;
+                height: 330px;
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .message-text {
+                font-size: 24px;
+                max-width: 100%;
+            }
+        }
+
+        .modern-button {
+            position: relative;
+            padding: 15px 40px;
+            font-size: 36px;
+            font-weight: 600;
+            color: var(--text-color);
+            background: var(--gradient);
+            border: none;
+            border-radius: 11px;
+            cursor: pointer;
+            overflow: hidden;
+            outline: none;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .modern-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .modern-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Ripple Effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--ripple-color);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+    <!-- Load Inter font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="message-container" role="alert">
+        <img src="/QRCODE/qrrr.png" alt="Movie Image">
+        <div class="message-text">
+            <strong >SCAN QR CODE </strong><br> to complete your payment and start streaming your movie right away. Quick, easy, and secure – your entertainment is just a scan away!
+        </div>
+    </div>
+    <div>
+        <button onclick="location.href='/home/index.html'" class="modern-button" id="rippleButton">
+            BACK
+        </button>
+    </div>
+
+    <script>
+        document.getElementById('rippleButton').addEventListener('click', function (e) {
+            // Create a span element for the ripple effect
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+
+            // Calculate the position of the ripple
+            const rect = e.target.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = `${size}px`;
+            ripple.style.left = `${e.clientX - rect.left - size / 2}px`;
+            ripple.style.top = `${e.clientY - rect.top - size / 2}px`;
+
+            // Append the ripple to the button
+            this.appendChild(ripple);
+
+            // Remove the ripple element after the animation ends
+            ripple.addEventListener('animationend', () => {
+                ripple.remove();
+            });
+        });
+    </script>
+</body>
+</html>

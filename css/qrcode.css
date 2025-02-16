@@ -1,0 +1,114 @@
+
+        /* Modal Styling */
+        .modal, .qr-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 888px;
+            background: #d6cbcb;
+            padding: 30px;
+            border-radius: 22px;
+            box-shadow: 0 10px 25px rgba(233, 227, 227, 0.1);
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        .modal.active, .qr-modal.active {
+            display: block;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+        
+        /* Modal Headers */
+        .modal h2, .qr-modal h3 {
+            margin: 0 0 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #a84646;
+        }
+        
+        /* Modal Paragraph */
+        .modal p {
+            font-size: 26px;
+            color: #362e2e;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+   
+        /* Modal Buttons */
+        .modal button, .qr-modal button {
+            margin-top: 15px;
+            border: none;
+            width: 222px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, transform 0.2s;
+        }
+        
+        /* Buy Button Styling */
+        .buy-btn {
+            background: linear-gradient(145deg, #28a745, #218838);
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            padding: 12px 30px;
+        }
+        
+        .buy-btn:hover {
+            background: linear-gradient(145deg, #218838, #28a745);
+            transform: scale(1.05);
+        }
+        
+        /* Close Button Styling */
+        .close-btn {
+            background: linear-gradient(145deg, #dc3545, #c82333);
+            color: white;
+            font-size: 19px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 11px;
+            transition: background 0.3s, transform 0.2s;
+            padding: 12px 30px;
+        }
+        
+        .close-btn:hover {
+            background: linear-gradient(145deg, #c82333, #dc3545);
+            transform: scale(1.05);
+        }
+        
+        /* Overlay Styling */
+        .overlay, .qr-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            transition: opacity 0.3s ease;
+        }
+        
+        .overlay.active, .qr-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        /* QR Code Styling */
+        .qr-code img {
+            width: 350px;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
