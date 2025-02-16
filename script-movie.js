@@ -2,11 +2,7 @@
 
 // Sample movie data for demonstration purposes
 const movieDataPool = [
-    { 
-        title: 'ផែនការកម្ទេចសុខនខពិសោធន៍', 
-        imageUrl: 'https://image.tmdb.org/t/p/w300/o4z5rtTS2jZgL1OaTLV0sxIyVxO.jpg', 
-        link: `${encodeURIComponent('ផែនការកម្ទេចសុខនខពិសោធន៍')}.html` 
-    },
+
     { 
         title: 'សោកនាដកម្មលើយន្តហោះ', 
         imageUrl: 'https://image.tmdb.org/t/p/original/zHoEGiZ8webTnaPlNB7DmxAJ14B.jpg', 
@@ -43,11 +39,7 @@ const movieDataPool = [
         imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfok9qbKBq0Pu2T5uwktPQgvod2TFOAir6fg&s', 
         link: `${encodeURIComponent('TheWitch')}.html` 
     },
-    { 
-        title: 'LITTLE FOREST 2020', 
-        imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_Y6C2lrUZOrhY3AEKbjqP0fhfqxWGAmDIlQ&s', 
-        link: `${encodeURIComponent('LITTLEFOREST')}.html` 
-    },
+
     { 
         title: 'Operation Undead', 
         imageUrl: 'https://image.tmdb.org/t/p/original/elxYvqymNurnpUJmlEgoDGogXwq.jpg', 
