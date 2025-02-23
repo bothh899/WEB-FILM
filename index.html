@@ -6,64 +6,38 @@
     
     <title>Movie Grid</title>
     <style>
-body {
+        body {
     background-color: #111;
     color: white;
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
-    display: flex; /* Still useful for centering */
+    display: flex;
+    align-items: flex-start;
     justify-content: center;
-    min-height: 100vh;
-    width: 100vw;
-    overflow-y: auto; /* Added to handle vertical scrolling */
-}
 
-.main {
-    background-color: #3A3A3A;
-    width: 100%;
-    max-width: 4400px;
-    min-height: 100vh;
-    text-align: center;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Media query for tablets and mobile devices */
-@media (max-width: 768px) {
-    body {
-        padding: 0;
-        margin: 0;
-        width: 100vw;
-        min-height: 100vh;
-        overflow-x: hidden;
-        display: block; /* Changed from flex for mobile */
-    }
     
+        }
+
+        .main {
+            /* background-color: rgb(31, 34, 34); */
+            background-color: #3A3A3A;
+            width: calc(100% - 10px); /* Adjust width to account for sidebar */
+            width: 96,5%;
+            justify-content: space-between;
+            height: 100%;
+            text-align: center;
+            /* margin-left: 90px; Push main content to the right of the sidebar */
+            /* transition: margin-left 0.3s ease; Smooth transition for sidebar toggle */
+            /* padding: 0px; Add some padding inside the main container */
+        }
+        @media (max-width: 768px) {
     .main {
         width: 100%;
         max-width: none;
-        min-height: 100vh;
-        padding: 10px;
-        margin: 0;
+        height: auto;
+        padding: 10px; /* Add padding for better spacing */
     }
 }
-
-/* Additional media query for smaller screens */
-@media (max-width: 480px) {
-    .main {
-        padding: 5px;
-    }
-}
-
-/* Ensure content stays within bounds */
-html {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
 
         .carousel-container {
             width: 100%;
