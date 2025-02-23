@@ -8,12 +8,12 @@
     <style>
 /* Define CSS custom properties for a modern, reusable design system */
 :root {
-    --background-dark: #0d0d0d; /* Darker, more sophisticated black */
-    --background-secondary: #1e1e1e; /* Modern gray for main content */
-    --text-primary: #f5f5f5; /* Softer white for better readability */
-    --accent-color: #e50914; /* Vibrant red (Netflix-inspired) for highlights */
-    --transition-speed: 0.3s; /* Smooth transitions */
-    --spacing-unit: 1rem; /* Consistent spacing */
+    --background-dark: #0d0d0d;
+    --background-secondary: #1e1e1e;
+    --text-primary: #f5f5f5;
+    --accent-color: #e50914;
+    --transition-speed: 0.3s;
+    --spacing-unit: 1rem;
 }
 
 /* Reset and base styles */
@@ -25,88 +25,100 @@
 
 /* Modernized body styles */
 body {
-    background: linear-gradient(135deg, var(--background-dark), #1a1a1a); /* Subtle gradient for depth */
+    background: linear-gradient(135deg, var(--background-dark), #1a1a1a);
     color: var(--text-primary);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; /* Modern font stack */
-    line-height: 1.6; /* Improved readability */
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    line-height: 1.6;
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    height: 100%; /* Ensure it stretches to full height */
     width: 100vw;
     overflow-x: hidden;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Better alignment for content */
-    -webkit-font-smoothing: antialiased; /* Smoother text rendering */
+    align-items: flex-start;
+    -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 /* Modernized main container */
 .main {
     background: var(--background-secondary);
-    width: 100%; /* Full width by default for modern layouts */
-    max-width: 1440px; /* Constrain for larger screens */
+    width: 100%;
+    max-width: 1440px;
     min-height: 100vh;
+    height: 100%; /* Match body height */
     text-align: center;
     padding: var(--spacing-unit);
-    border-radius: 12px; /* Subtle rounded corners */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Modern shadow for depth */
-    transition: all var(--transition-speed) ease; /* Smooth transitions */
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transition: all var(--transition-speed) ease;
 }
 
-/* Enhanced media query for portrait mobile devices */
+/* Ensure full-screen in portrait mobile devices */
 @media (max-width: 768px) and (orientation: portrait) {
-    body {
-        background: var(--background-dark); /* Solid color for mobile simplicity */
+    html, body {
+        height: 100%; /* Ensure full viewport height */
         width: 100vw;
-        min-height: 100vh;
-        padding: 0;
         margin: 0;
-        display: block; /* Stack content naturally */
+        padding: 0;
+        overflow-x: hidden;
+        overflow-y: auto; /* Allow scrolling if content exceeds height */
+    }
+
+    body {
+        background: var(--background-dark);
+        display: block;
+        min-height: 100vh;
+        height: auto; /* Allow natural content height */
     }
     
     .main {
-        width: 100%;
-        max-width: none; /* Remove max-width restriction */
-        min-height: 100vh;
-        padding: calc(var(--spacing-unit) / 2); /* Reduced padding for mobile */
+        width: 100vw; /* Explicitly full viewport width */
+        max-width: none;
+        min-height: 100vh; /* Minimum full height */
+        height: auto; /* Allow content to expand naturally */
+        padding: 0; /* Remove padding for true full-screen */
         margin: 0;
-        border-radius: 0; /* No rounded corners on mobile for full-screen feel */
-        box-shadow: none; /* Remove shadow on mobile for cleaner look */
+        border-radius: 0;
+        box-shadow: none;
     }
 }
 
 /* Enhanced media query for landscape mobile devices */
 @media (max-width: 768px) and (orientation: landscape) {
     .main {
-        width: 100%;
+        width: 100vw;
         max-width: none;
         min-height: 100vh;
+        height: auto;
         padding: var(--spacing-unit);
-        border-radius: 0; /* Consistent with portrait */
+        border-radius: 0;
     }
 }
 
-/* Additional modern touch: Smooth scrolling */
+/* Smooth scrolling */
 html {
     scroll-behavior: smooth;
+    height: 100%; /* Ensure root element takes full height */
 }
 
 /* Small screens (below 480px) */
 @media (max-width: 480px) {
     body {
-        font-size: 14px; /* Slightly smaller text for small screens */
+        font-size: 14px;
     }
     
     .main {
-        padding: calc(var(--spacing-unit) / 4); /* Even less padding */
+        padding: 0; /* Consistent with portrait full-screen */
     }
 }
 
 /* Large screens (above 1200px) */
 @media (min-width: 1200px) {
     .main {
-        padding: calc(var(--spacing-unit) * 1.5); /* More spacious on large screens */
+        padding: calc(var(--spacing-unit) * 1.5);
     }
 }
         .carousel-container {
