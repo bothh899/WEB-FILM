@@ -6,42 +6,54 @@
     
     <title>Movie Grid</title>
     <style>
-     body {
+body {
     background-color: #111;
     color: white;
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0; /* Added for consistency */
+    padding: 0;
     display: flex;
     justify-content: center;
-    min-height: 100vh; /* Ensures full viewport height */
-    width: 100vw; /* Ensures full viewport width */
+    min-height: 100vh;
+    width: 100vw;
+    overflow-x: hidden; /* Moved here for all cases */
 }
 
 .main {
     background-color: #3A3A3A;
-    width: 96.5%; /* Fixed syntax from 96,5% */
-    max-width: 100%; /* Prevents overflow */
-    min-height: 100vh; /* Ensures full height */
+    width: 96.5%;
+    max-width: 100%;
+    min-height: 100vh;
     text-align: center;
-    box-sizing: border-box; /* Includes padding in width */
+    box-sizing: border-box;
 }
 
-/* Media query for mobile devices */
-@media (max-width: 768px) {
-    .main {
-        width: 100%; /* Full width on mobile */
-        max-width: none;
-        min-height: 100vh; /* Maintain full height */
-        padding: 10px;
-    }
-    
+/* Media query for mobile devices in portrait orientation */
+@media (max-width: 768px) and (orientation: portrait) {
     body {
         width: 100vw;
         min-height: 100vh;
         padding: 0;
         margin: 0;
-        overflow-x: hidden; /* Prevents horizontal scroll */
+        display: block; /* Changed from flex for better mobile flow */
+    }
+    
+    .main {
+        width: 100%;
+        max-width: none;
+        min-height: 100vh;
+        padding: 10px;
+        margin: 0;
+    }
+}
+
+/* Additional query for landscape orientation if needed */
+@media (max-width: 768px) and (orientation: landscape) {
+    .main {
+        width: 100%;
+        max-width: none;
+        min-height: 100vh;
+        padding: 10px;
     }
 }
 
